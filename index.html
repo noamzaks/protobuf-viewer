@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Protobuf Viewer</title>
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://fonts.googleapis.com/css?family=Ubuntu:400,700,400italic"
+    />
+    <script src="wasm_exec.js"></script>
+    <script>
+      const go = new Go()
+      go.argv = ["js", "--help"]
+      WebAssembly.instantiateStreaming(
+        fetch("/protoc-gen-doc.wasm"),
+        go.importObject
+      ).then((result) => {
+        go.run(result.instance)
+      })
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
